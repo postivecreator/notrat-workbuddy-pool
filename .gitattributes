@@ -1,0 +1,13 @@
+# 统一行尾：源码走 LF，避免 Windows 上提交 CRLF 造成整文件 diff
+* text=auto eol=lf
+
+# 这些必须是 CRLF，否则 cmd/PowerShell 跑不了
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# 二进制：不要做行尾转换
+*.png   binary
+*.jpg   binary
+*.zip   binary
+*.ico   binary

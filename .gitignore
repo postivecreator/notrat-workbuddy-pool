@@ -1,0 +1,37 @@
+# 依赖 / 构建产物
+node_modules/
+dist/
+*.log
+
+# 面板预览产物（截图体积大，且能一条命令重建）
+preview/out/
+
+# 运行期数据千万不要进仓库
+# 真实路径在 ~/.notrat/plugins/data/notrat-workbuddy-pool/
+data/
+config.json
+state.json
+*.state.json
+
+# 本机产生的登录快照 / 凭据，任何情况下都不提交
+*.token
+*.credential*
+auth.json
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.bak
+*~
+_r.txt
+out.txt
+
+# 生成的预览 / 测试产物（一条命令可重建）
+tests/_preview_accounts.html
+preview/*.html
+host-preview.html
+# 测试临时产物
+tests/_out/
+tests/*.compiled.mjs

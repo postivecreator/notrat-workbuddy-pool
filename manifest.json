@@ -1,0 +1,187 @@
+{
+  "id": "notrat-workbuddy-pool",
+  "name": "WorkBuddy 积分池",
+  "version": "0.2.0",
+  "type": "feature",
+  "manifestVersion": 2,
+  "enabled": true,
+  "scope": "global",
+  "icon": "lucide:Repeat",
+  "description": "把你本机已登录的 WorkBuddy / CodeBuddy 账号合成一个自动故障转移的模型服务商，接进 Notrat。哪个号限流了、积分用完了、令牌失效了，请求自动落到下一个能用的号上。附带模型目录、积分自动化与请求可观测。只读本机已有登录态，不发起任何登录流程。",
+  "author": {
+    "name": "Notrat Community",
+    "url": "https://github.com/2861292267/DSH-Official-WorkBuddy-Credit-Proxy"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/2861292267/DSH-Official-WorkBuddy-Credit-Proxy",
+  "notrat": {
+    "minVersion": "1.3.3"
+  },
+  "mcpServers": [
+    {
+      "id": "pool",
+      "name": "积分池工具",
+      "transport": "stdio",
+      "command": "node",
+      "args": [
+        "${pluginDir}/server/index.js"
+      ]
+    }
+  ],
+  "contributions": {
+    "commands": [
+      {
+        "name": "wb-wiring",
+        "description": {
+          "zh": "取一键接入信息（baseUrl / apiKey / 模型列表）",
+          "en": "Show one-click wiring for the Notrat custom provider"
+        },
+        "tool": "wb_wiring",
+        "argsTemplate": "{ \"region\": \"$0\" }",
+        "usage": "/wb-wiring cn"
+      },
+      {
+        "name": "wb-status",
+        "description": {
+          "zh": "看账号池状态（积分 / 签到 / 冷却 / 停用）",
+          "en": "Show pool status (credits, check-in, cooldown)"
+        },
+        "tool": "wb_status",
+        "argsTemplate": "{ \"region\": \"$0\" }",
+        "usage": "/wb-status cn"
+      },
+      {
+        "name": "wb-rescan",
+        "description": {
+          "zh": "重新扫描本机桌面端登录快照",
+          "en": "Rescan local desktop sign-in snapshots"
+        },
+        "tool": "wb_rescan",
+        "argsTemplate": "{}",
+        "usage": "/wb-rescan"
+      },
+      {
+        "name": "wb-models",
+        "description": {
+          "zh": "列模型目录（上下文 / 图片 / 可用账号数）",
+          "en": "List the model catalog"
+        },
+        "tool": "wb_models",
+        "argsTemplate": "{ \"region\": \"$0\" }",
+        "usage": "/wb-models cn"
+      },
+      {
+        "name": "wb-checkin",
+        "description": {
+          "zh": "立即跑一次积分自动化（签到 / 活跃 / 任务 / 连登 / 猫猫）",
+          "en": "Run the daily points automation now"
+        },
+        "tool": "wb_automation",
+        "argsTemplate": "{ \"action\": \"run\" }",
+        "usage": "/wb-checkin"
+      },
+      {
+        "name": "wb-reset-cooldowns",
+        "description": {
+          "zh": "清除全部限流冷却",
+          "en": "Clear every rate-limit cooldown"
+        },
+        "tool": "wb_reset_cooldowns",
+        "argsTemplate": "{}",
+        "usage": "/wb-reset-cooldowns"
+      },
+      {
+        "name": "wb-doctor",
+        "description": {
+          "zh": "自检（状态隔离 / 端口 / 账号发现 / 上游版本）",
+          "en": "Self-check: state isolation, ports, account discovery"
+        },
+        "tool": "wb_doctor",
+        "argsTemplate": "{}",
+        "usage": "/wb-doctor"
+      }
+    ],
+    "promptSections": [
+      {
+        "slot": "custom",
+        "title": "WorkBuddy 积分池（插件 notrat-workbuddy-pool）",
+        "content": "用户装了「WorkBuddy 积分池」插件：它把本机已登录的 WorkBuddy / CodeBuddy 桌面端账号合成一个自动故障转移的模型池，通过桥暴露成本机回环端点，再接成 Notrat 的「自定义服务商」。\n\n**当用户说「模型用不了 / 限流了 / 换个号 / 积分」时**，先调 `wb_engine`（action=info）看引擎是否在跑，再调 `wb_status` 看账号行（哪个号在冷却、哪个号额度不足、哪个号需重新登录）。\n\n**接入 / 换配置**：调 `wb_wiring` 拿 baseUrl + apiKey + 模型列表，然后引导用户到「设置 → AI → 自定义服务商」按这三项填。注意：\n- 给的是**桥**的地址（默认 8130 国内 / 8131 国际），不是 shim 的 8120/8121——shim 只放行回环 Origin，渲染进程直连会被 403，这是设计如此。\n- 端口固定，重载 Notrat 不会变，所以填一次就够。\n\n**常用操作**：`wb_rescan` 重新发现账号（只读本机登录态，不发起登录）；`wb_reset_cooldowns` 清限流冷却；`wb_toggle_account` 停用/启用某号；`wb_set_reserve` 设积分保留线；`wb_automation`（action=run）立即跑签到等自动化；`wb_requests` / `wb_performance` 看请求记录与按模型的排队/速度。\n\n**纪律**：令牌永不回显（出口已统一脱敏）。`wb_bootstrap` 是开局一站式工具（起引擎 + 没账号自动扫一次 + 告诉该用哪个区 + 能不能接），面板首屏用它；排查\"没找到账号\"优先看它返回的 `counts` 与 `verdict`。\n\n积分自动化**默认关着**，要开得用户明确同意（`wb_config_set` 传 `{\"automation\":{\"enabled\":true}}`）——它会产生真实的上游流量。\n\n**前提**：账号来自桌面端留在本机的登录快照。只用了网页版登录的话读不到，`wb_status` 会是 0 个账号，此时提示用户先在桌面端登录（浏览器登录不算）。\n\n**口令纪律**：`wb_wiring` 默认脱敏。它有一个 `includeSecret` 开关（面板的「复制 / 写入配置」按钮用），**你在对话里一律不要传它是 true** —— 那会把回环口令写进聊天记录与模型上下文。**接入是自动的**：面板在「引擎在跑 + 找到账号 + 还没接」时会自己写一次（配置 `autoWire` 默认 true，只写一次、幂等、只动本池那一条）。所以别让用户去「设置 → AI」手抄三行——那是老流程。用户问「怎么开始用」，答案是：回聊天框、点上面的模型名、选带「积分池」的那一项。只有他明确要手动填时，才把 `wb_wiring` 给的值（脱敏，仅供核对）报给他抄。"
+      }
+    ],
+    "settings": [
+      {
+        "key": "pool",
+        "title": "WorkBuddy 积分池",
+        "fields": [
+          {
+            "key": "autoStart",
+            "label": "随插件启动引擎",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "key": "autoWire",
+            "label": "找到账号后自动接进 Notrat",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "key": "distribution",
+            "label": "选号分配",
+            "type": "select",
+            "default": "priority",
+            "options": [
+              {
+                "label": "优先（抽干一个再用下一个）",
+                "value": "priority"
+              },
+              {
+                "label": "轮询（按顺序）",
+                "value": "round-robin"
+              },
+              {
+                "label": "均衡（空闲越久权重越高）",
+                "value": "balanced"
+              }
+            ]
+          },
+          {
+            "key": "minUsableCredits",
+            "label": "额度门槛（余额低于此值跳过，0 关闭）",
+            "type": "number",
+            "default": 50
+          },
+          {
+            "key": "cooldownMs",
+            "label": "限流冷却基数（毫秒）",
+            "type": "number",
+            "default": 60000
+          }
+        ]
+      }
+    ],
+    "ui": [
+      {
+        "id": "wb-panel",
+        "title": "积分池",
+        "icon": "🔁",
+        "location": "right-panel",
+        "content": {
+          "type": "component",
+          "sourceFile": "panels/pool.tsx"
+        }
+      },
+      {
+        "id": "wb-page",
+        "title": "积分池 · 全页",
+        "icon": "🔁",
+        "location": "page",
+        "content": {
+          "type": "component",
+          "sourceFile": "panels/pool.tsx",
+          "fullBleed": true
+        }
+      }
+    ]
+  }
+}

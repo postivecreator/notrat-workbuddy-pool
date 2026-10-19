@@ -1,0 +1,43 @@
+{
+  "upstream": {
+    "repo": "2861292267/DSH-Official-WorkBuddy-Credit-Proxy",
+    "url": "https://github.com/2861292267/DSH-Official-WorkBuddy-Credit-Proxy",
+    "ref": "main",
+    "package": "dsh-rotakit@2.3.26",
+    "license": "MIT",
+    "authors": [
+      "XDTrees (upstream original)",
+      "dingminhua",
+      "corrinehu",
+      "2861292267 (RotaKit adaptation)"
+    ]
+  },
+  "syncedAt": "2026-10-16T10:37:59.266Z",
+  "files": {
+    "rotakit.js": {
+      "from": "lib/index.js",
+      "sha256": "447dab631fa442caf7a21a6bcbabe049b427503cdbdda1a0945f2883a4d17e2f",
+      "bytes": 542791
+    },
+    "protocol-compat.js": {
+      "from": "lib/protocol-compat.js",
+      "sha256": "0ab4188e0f083bf1b277b2e3f42e45b07eef58a437c81d2fcb5975ba0c100d40",
+      "bytes": 40245
+    }
+  },
+  "adaptation": {
+    "hostImportsRepointed": [
+      "import z from \"@deepseek-ai/schemastery\";",
+      "import { createProvider } from \"@earendil-works/pi-ai\";",
+      "import { openAICompletionsApi } from \"@earendil-works/pi-ai/api/openai-completions.lazy\";",
+      "import { resolveImageAttachmentAccess, resolveRetryPolicy } from \"@deepseek-ai/dsh-llm\";",
+      "import { PiAiAdapter } from \"@deepseek-ai/dsh-llm-pi-ai\";"
+    ],
+    "extraExports": [
+      "createRequestLog",
+      "createOutputProbes",
+      "createQueueStats"
+    ],
+    "rationale": "None of the repointed seams sit on the engine's core path (see server/vendor/host-stub.js). The extra exports are a pure addition so the Notrat panel can read request/queue/probe data."
+  }
+}
