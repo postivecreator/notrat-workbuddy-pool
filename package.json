@@ -1,6 +1,6 @@
 {
   "name": "notrat-workbuddy-pool",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "把本机已登录的 WorkBuddy / CodeBuddy 账号合成一个自动故障转移的模型池（Notrat 插件，零运行时依赖）",
   "license": "MIT",
@@ -26,5 +26,14 @@
   "comment": {
     "runtime": "插件本身零依赖：引擎已 vendor 在 server/vendor/，manifest.json 直接用 node 起 MCP server。",
     "dev": "scripts/ 与 tests/ 里的校验脚本要借 Notrat 源码的 node_modules（esbuild / react），用 NOTRAT_REPO 指过去；详见 README「开发」。"
+  },
+  "author": "Pikachu (postivecreator)",
+  "homepage": "https://github.com/postivecreator/notrat-workbuddy-pool#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/postivecreator/notrat-workbuddy-pool.git"
+  },
+  "bugs": {
+    "url": "https://github.com/postivecreator/notrat-workbuddy-pool/issues"
   }
 }

@@ -259,6 +259,8 @@ python scripts/verify-release.py  # 用 Python 的 zipfile 独立复核（第二
 
 ## 署名与许可
 
+维护者：**[Pikachu](https://github.com/postivecreator)**（https://github.com/postivecreator/notrat-workbuddy-pool）。
+
 本插件 **MIT**（见 [LICENSE](./LICENSE)）。第三方引擎的署名与「改了什么」单独记在
 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。
 

@@ -1,7 +1,7 @@
 {
   "id": "notrat-workbuddy-pool",
   "name": "WorkBuddy 积分池",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "feature",
   "manifestVersion": 2,
   "enabled": true,
@@ -9,11 +9,11 @@
   "icon": "lucide:Repeat",
   "description": "把你本机已登录的 WorkBuddy / CodeBuddy 账号合成一个自动故障转移的模型服务商，接进 Notrat。哪个号限流了、积分用完了、令牌失效了，请求自动落到下一个能用的号上。附带模型目录、积分自动化与请求可观测。只读本机已有登录态，不发起任何登录流程。",
   "author": {
-    "name": "Notrat Community",
-    "url": "https://github.com/2861292267/DSH-Official-WorkBuddy-Credit-Proxy"
+    "name": "Pikachu",
+    "url": "https://github.com/postivecreator"
   },
   "license": "MIT",
-  "repository": "https://github.com/2861292267/DSH-Official-WorkBuddy-Credit-Proxy",
+  "repository": "https://github.com/postivecreator/notrat-workbuddy-pool",
   "notrat": {
     "minVersion": "1.3.3"
   },

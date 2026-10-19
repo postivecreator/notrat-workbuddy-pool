@@ -1,5 +1,19 @@
 # 变更记录
 
+## 0.2.1 — 换发布身份
+
+纯元数据与归属修正，插件行为与 0.2.0 完全相同。
+
+### 修正
+
+- **`manifest.json` 的 `author` / `repository` 写错了**：`author.name` 曾是一个并不存在的组织名，
+  `author.url` 与 `repository` 也错误地指向上游引擎仓库 —— 等于"自称 A、链接却指向 B"。
+  现在改为本插件的实际维护者与自己的仓库。上游署名不因此减少：它单独记在
+  `THIRD_PARTY_NOTICES.md`，并在 README「署名与许可」里逐条列出。
+- `LICENSE` 的版权主体改为实际维护者。
+- `package.json` 补 `author` / `repository` / `bugs` / `homepage`。
+- git 历史的作者改写为与发布身份一致（因此 SHA 变化，tag 由 `v0.2.0` 变为 `v0.2.1`）。
+
 ## 0.2.0 — 首个公开版（面向新手）
 
 目标从"能跑"改成"装完不用配置"。
