@@ -1,4 +1,10 @@
-# WorkBuddy 积分池（notrat-workbuddy-pool）
+<p align="center">
+  <img src="./assets/icon.webp" width="96" height="96" alt="WorkBuddy 积分池">
+</p>
+
+<h1 align="center">WorkBuddy 积分池</h1>
+
+<p align="center"><code>notrat-workbuddy-pool</code> · Notrat 插件</p>
 
 把你本机**已登录的 WorkBuddy / CodeBuddy 桌面端账号**合成一个自动故障转移的模型服务商，接进 Notrat。
 
@@ -256,6 +262,8 @@ python scripts/verify-release.py  # 用 Python 的 zipfile 独立复核（第二
 **文件名有约束**：必须是 `notrat-workbuddy-pool.zip`，不能加版本号。Windows / macOS 解压时用 zip 文件名建目录，而目录名必须等于 `manifest.id`（插件靠它解析 `${pluginDir}`）。加了版本号 → 解压出 `notrat-workbuddy-pool-0.2.0/` → 装不上。
 
 构建是**可复现**的：固定时间戳、条目排序、deflate level 9 —— 同样的源文件永远得到同样的 sha256，方便你核对别人手里的包是不是原版。
+
+`assets/icon.webp` 就是这份 README 顶部那张图（5.3KB），会一起进包 —— 插件**运行时不读它**（图标本体内联在 `manifest.icon` 的 data URI 里），进包只为了解压后看 README 时图不裂。打包器只收 `manifest.json` / `README.md` / `LICENSE` / `CHANGELOG.md` / `THIRD_PARTY_NOTICES.md` 和 `panels/`、`server/`、`assets/` 三个目录。
 
 ## 署名与许可
 

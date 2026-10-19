@@ -35,7 +35,7 @@ const ZIP_PATH = path.join(DIST, ZIP_NAME);
 /* ══════════════ 1. 收文件：白名单目录 + 硬性禁入 ══════════════ */
 
 /** 进包的目录（递归全收，将来加文件不会漏） */
-const INCLUDE_DIRS = ["panels", "server"];
+const INCLUDE_DIRS = ["panels", "server", "assets"];
 /** 进包的根文件 */
 const INCLUDE_FILES = ["manifest.json", "README.md", "LICENSE", "CHANGELOG.md", "THIRD_PARTY_NOTICES.md"];
 
