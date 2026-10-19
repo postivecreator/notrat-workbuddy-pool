@@ -19,23 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Third-party notices
-===================
-
-This project vendors an engine that is not original to it. All of the
-following are MIT-licensed, and their notices are preserved in
-`server/vendor/` (see `VENDOR.json` for exact source, ref and SHA-256):
-
-* dsh-rotakit (as bundled in
-  2861292267/DSH-Official-WorkBuddy-Credit-Proxy) — MIT
-* XDTrees/dsh-workbuddy-xdpool — MIT, author XDTrees
-* dingminhua/dsh-connect-workbuddy — MIT (at-rest credential decryption)
-* corrinehu/dsh-workbuddy-connect — MIT (shim hardening, error mapping)
-
-The vendored files are marked "VENDORED — DO NOT EDIT BY HAND" at the top.
-Local modifications are limited to repointing DSH host imports at
-`host-stub.js` and exporting three internal observability factories; the
-engine logic itself is upstream's.

@@ -259,7 +259,8 @@ python scripts/verify-release.py  # 用 Python 的 zipfile 独立复核（第二
 
 ## 署名与许可
 
-本插件 **MIT**。
+本插件 **MIT**（见 [LICENSE](./LICENSE)）。第三方引擎的署名与「改了什么」单独记在
+[THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。
 
 引擎移植自 [`2861292267/DSH-Official-WorkBuddy-Credit-Proxy`](https://github.com/2861292267/DSH-Official-WorkBuddy-Credit-Proxy)（包名 `dsh-rotakit`，MIT），那是 [`XDTrees/dsh-workbuddy-xdpool`](https://github.com/XDTrees/dsh-workbuddy-xdpool)（MIT，作者 **XDTrees**）的改编版；账号凭据解密来自 [`dingminhua/dsh-connect-workbuddy`](https://github.com/dingminhua/dsh-connect-workbuddy)（MIT）；shim 加固与错误映射参考 [`corrinehu/dsh-workbuddy-connect`](https://github.com/corrinehu/dsh-workbuddy-connect)（MIT）。
 

@@ -37,7 +37,7 @@ const ZIP_PATH = path.join(DIST, ZIP_NAME);
 /** 进包的目录（递归全收，将来加文件不会漏） */
 const INCLUDE_DIRS = ["panels", "server"];
 /** 进包的根文件 */
-const INCLUDE_FILES = ["manifest.json", "README.md", "LICENSE", "CHANGELOG.md"];
+const INCLUDE_FILES = ["manifest.json", "README.md", "LICENSE", "CHANGELOG.md", "THIRD_PARTY_NOTICES.md"];
 
 /** 任何层级出现这些目录名 → 整支跳过 */
 const DENY_DIRS = new Set(["preview", "tests", "scripts", "dist", "node_modules", ".git", "data", "_archive", ".notrat"]);
