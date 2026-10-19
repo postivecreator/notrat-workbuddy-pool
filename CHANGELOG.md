@@ -7,6 +7,7 @@
 ### 元数据
 
 - `manifest.json` 的 `author` / `repository` 指向本插件自己的仓库与实际维护者。
+- 插件图标改为自绘图标：192px webp 内联进 `manifest.icon`（四角透明，按 App 图标比例圆角）。
 - `LICENSE` 的版权主体为实际维护者。
 - `package.json` 补 `author` / `repository` / `bugs` / `homepage`。
 - 上游署名不减：四个上游项目的归属单独记在 `THIRD_PARTY_NOTICES.md`，
