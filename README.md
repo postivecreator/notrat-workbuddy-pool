@@ -185,21 +185,32 @@ Notrat 渲染进程 ──→ 桥 127.0.0.1:8130 ──→ shim 127.0.0.1:8120 �
 
 ## 开发
 
-> 下面前两条用的是 Notrat 自己的校验脚本，需要本地有 Notrat 源码（与本项目同级）。
+**运行时零依赖**，但**校验脚本**要借 Notrat 源码里的 `esbuild` / `react`（面板是 TSX，得编译才能验）。
+脚本会自动往上找 4 层目录里的 `Notrat` / `notrat` / `front_project/Notrat`；放不到一起就用环境变量指过去：
 
 ```bash
-# 面板离线校验（编译 / 导出 / 渲染，退出码 0 才算过）
-node ../front_project/Notrat/scripts/plugin-panel-check.mjs panels/pool.tsx
+# PowerShell
+$env:NOTRAT_REPO = "C:\path\to\Notrat"
+# bash / zsh
+export NOTRAT_REPO=/path/to/Notrat
+```
 
-# 按宿主真实尺寸预览（红=横向溢出必须改，黄=超高会滚动）
-node ../front_project/Notrat/scripts/plugin-panel-preview.mjs panels/pool.tsx --manifest manifest.json
+截图另需一个 headless 浏览器（Playwright 的 chromium 缓存或系统 Chrome/Edge，都会自动探测；
+也可用 `CHROME_PATH` 指定）。装一个最省事：`npx playwright install chromium`。
 
-# 12 画框 × 4 套主题截图 + 逐框体检（溢出/字号/热区/对比度/重复标题）
+```bash
+# 全部行为测试（编译 / 引导态 / 接线 / 点击 / MCP 握手 / 渲染）
+npm test                 # = node scripts/test-all.cjs
+
+# 面板离线校验（Notrat 仓库自带，退出码 0 才算过）
+node "$NOTRAT_REPO/scripts/plugin-panel-check.mjs" panels/pool.tsx
+
+# 按宿主真实尺寸预览（红=横向溢出必须改，黄=超出宿主高度会滚动）
+node "$NOTRAT_REPO/scripts/plugin-panel-preview.mjs" panels/pool.tsx --manifest manifest.json
+
+# 12 画框 × 4 套主题：出 HTML → 截图 → 逐框体检（溢出/字号/热区/对比度/重复标题）
 node scripts/preview.mjs --shot
 node scripts/probe-frames.mjs minimalist-light preview-minimalist-light.html
-
-# 全部测试（编译 / 引导态 / 接线 / 点击 / MCP 握手 / 渲染）
-node scripts/test-all.cjs
 
 # 真起引擎跑一次开局（会绑端口；本机已有实例时会给出"另一个在跑"的诊断）
 node tests/_bootstrap_live.mjs
@@ -214,6 +225,7 @@ server/index.js        MCP server：工具表 + 引擎单例
 server/engine.js       引擎外壳：端口、账号池、状态文档
 server/bridge.js       桥：CORS + 转发
 server/vendor/         vendor 进来的引擎（见 VENDOR.json，勿手改）
+scripts/_paths.mjs     路径解析：Notrat 源码 / headless 浏览器（自动探测 + 环境变量覆盖）
 scripts/               校验 / 预览 / 打包脚本
 tests/                 行为测试
 ```
@@ -226,7 +238,7 @@ tests/                 行为测试
 
 ```bash
 node scripts/make-release.mjs     # 产出 dist/notrat-workbuddy-pool.zip + .sha256
-py scripts/verify-release.py      # 用 Python 的 zipfile 独立复核（第二套实现）
+python scripts/verify-release.py  # 用 Python 的 zipfile 独立复核（第二套实现；Windows 上也可写 py）
 ```
 
 **打包器不只是压一下，它在写完之后自检，任何一条不过就 exit 1**（不会产出"看起来成功"的包）：
