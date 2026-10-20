@@ -2,7 +2,8 @@
  * WorkBuddy 积分池 · 主面板
  * ============================================================================
  * 挂载：manifest.contributions.ui[]
- *   { id:"wb-panel", location:"right-panel" } + { id:"wb-page", location:"page" }
+ *   { id:"wb-panel", location:"right-panel" }  ← 右侧停靠栏（常驻）
+ *   { id:"wb-entry", location:"activity-bar", openMode:"page" }  ← 活动栏按钮，点击开整页
  *
  * 数据通路：window.electronAPI.mcp.callTool(props.serverId, tool, args)
  *   返回 MCP 信封 { content:[{ type:"text", text:"<JSON>" }] } → unpack() 解成 payload
