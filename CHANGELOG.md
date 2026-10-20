@@ -1,5 +1,39 @@
 # 变更记录
 
+## 0.2.3 — 修：Node 20 上 MCP server 起不来
+
+**症状**：Notrat 面板显示「状态读取失败 / Connection to MCP server failed」，
+子进程输出 `SyntaxError: Cannot use import statement outside a module`。
+
+**根因**：`server/` 下 7 个 `.js` 全是 ESM 写法，但没有任何文件声明 ES 模块。
+Node 22.7 起才默认「按语法自动判定模块类型」；低于它的 Node（含 Electron 33
+内置的 20.18.3）会把它们当 CJS 解析，第一条 `import` 就炸。
+
+**触发条件**：mac 从 Finder/Dock 启动时继承 launchd 极简 PATH，找不到用户自装
+的 node，宿主回退到应用内置 node（20.18.3）→ 必崩。开发机通常是 Node 22+，
+所以本地一直正常。
+
+**修法**：新增 `server/package.json`（`{"type":"module"}`），让 Node 把该目录
+内的 `.js` 一律按 ESM 解析。该文件随 `server/` 目录自动进发布包，不依赖根
+ `package.json`（根清单不进包）。
+
+顺带：`serverInfo.version` 由 0.1.0 同步到 0.2.3，避免排查时看错版本。
+## 0.2.2 — 活动栏入口
+
+面板不再只能从「插件箱」抽屉里找。
+
+### 新增
+
+- **活动栏按钮**：左侧活动栏多一格「积分池」，点一下直接整页打开。
+  图标仍是 🔁，行为与 `notrat-broadcast` / `notrat-daily` 一致（活动栏点击 = 整页）。
+  可在 设置 → 面板 → 活动栏按钮 里拖动排序或隐藏。
+- 原 `location:"page"` 的那份贡献改为 `location:"activity-bar"` + `openMode:"page"`
+  （id 由 `wb-page` 改名 `wb-entry`）——避免同一个面板在列表里出现两条一模一样的「全页」入口。
+
+### 不变
+
+- 右侧停靠栏（`wb-panel`）照旧，仍是常驻形态。
+
 ## 0.2.1 — 初始包
 
 首个发布包。插件行为与 0.2.0 完全相同，仅整理打包与元数据。

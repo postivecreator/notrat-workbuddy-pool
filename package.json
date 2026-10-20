@@ -1,7 +1,8 @@
 {
   "name": "notrat-workbuddy-pool",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "private": true,
+  "type": "module",
   "description": "把本机已登录的 WorkBuddy / CodeBuddy 账号合成一个自动故障转移的模型池（Notrat 插件，零运行时依赖）",
   "license": "MIT",
   "keywords": [

@@ -1,7 +1,7 @@
 {
   "id": "notrat-workbuddy-pool",
   "name": "WorkBuddy 积分池",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "type": "feature",
   "manifestVersion": 2,
   "enabled": true,
@@ -172,10 +172,11 @@
         }
       },
       {
-        "id": "wb-page",
-        "title": "积分池 · 全页",
+        "id": "wb-entry",
+        "title": "积分池",
         "icon": "🔁",
-        "location": "page",
+        "location": "activity-bar",
+        "openMode": "page",
         "content": {
           "type": "component",
           "sourceFile": "panels/pool.tsx",

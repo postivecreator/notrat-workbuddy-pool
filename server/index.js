@@ -16,7 +16,7 @@ import { WorkBuddyEngine, REGION_PORTS, BRIDGE_PORTS, REGIONS, NOTRAT_PROVIDERS,
 import { paths, envBootstrap } from "./env.js";
 
 const PROTOCOL_VERSION = "2024-11-05";
-const SERVER_INFO = { name: "notrat-workbuddy-pool", version: "0.1.0" };
+const SERVER_INFO = { name: "notrat-workbuddy-pool", version: "0.2.3" };
 
 /* ── 日志：只写 stderr ─────────────────────────────────────────── */
 
